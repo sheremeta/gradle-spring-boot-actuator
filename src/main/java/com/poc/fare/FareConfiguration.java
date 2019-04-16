@@ -6,18 +6,21 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 import static com.poc.fare.FareMetrics.FARE_REQUESTS_2XX;
 import static com.poc.fare.FareMetrics.FARE_REQUESTS_4XX;
 import static com.poc.fare.FareMetrics.FARE_REQUESTS_5XX;
 import static com.poc.fare.FareMetrics.FARE_REQUESTS_TIMER;
 import static com.poc.fare.FareMetrics.FARE_REQUESTS_XXX;
-import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 import static io.micrometer.core.instrument.Meter.Type.COUNTER;
 import static io.micrometer.core.instrument.Meter.Type.TIMER;
 
 @Configuration
-public class FareConfiguration {
+@EnableWebMvc
+public class FareConfiguration implements WebMvcConfigurer {
 
     @Bean
     public MeterRegistryCustomizer<MeterRegistry> fareRequestsTotal() {
